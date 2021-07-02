@@ -125,6 +125,10 @@ Tests
     ORDER BY SumTotal DESC, SumCompletion DESC
     LIMIT 1;
     
+| firstname | lastname | SumCompletion | SumTotal |
+| --------- | -------- | ------------- | -------- |
+| Michael   | Sandoro  | 9500          | 14877    |
+    
 **Query #7**
 
     SELECT DISTINCT users.firstname, users.lastname
