@@ -175,7 +175,7 @@ Tests
 | Zineb     | Atlas    | 6867333333.3333 |
 
 
-**Query #1**
+**Query #8**
 
     SELECT firstname, lastname user_lastname, (
       SELECT COUNT(tasks.id) 
