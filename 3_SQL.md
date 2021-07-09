@@ -173,3 +173,52 @@ Tests
 | firstname | lastname | result          |
 | --------- | -------- | --------------- |
 | Zineb     | Atlas    | 6867333333.3333 |
+
+
+**Query #1**
+
+    SELECT firstname, lastname user_lastname, (
+      SELECT COUNT(tasks.id) 
+      FROM tasks 
+      INNER JOIN profiles ON tasks.profile_id = profiles.id
+      INNER JOIN users ON users.id = profiles.user_id
+      WHERE users.lastname = user_lastname
+      AND completion = 100
+    ) AS tasksCompleted, (
+      SELECT COUNT(tasks.id) 
+      FROM tasks 
+      INNER JOIN profiles ON tasks.profile_id = profiles.id
+      INNER JOIN users ON users.id = profiles.user_id
+      WHERE users.lastname = user_lastname
+      AND completion != 100
+    ) AS tasksOnGoing, (
+      SELECT ROUND((tasksCompleted / COUNT(tasks.id)) * 100)
+      FROM tasks
+      INNER JOIN profiles ON tasks.profile_id = profiles.id
+      INNER JOIN users ON users.id = profiles.user_id
+      WHERE users.lastname = user_lastname
+    ) AS avancement
+    FROM users
+    ORDER BY firstname;
+
+| firstname | user_lastname | tasksCompleted | tasksOnGoing | avancement |
+| --------- | ------------- | -------------- | ------------ | ---------- |
+| Aimé      | Mauribert     | 3              | 9            | 25         |
+| Dexter    | Gonstan       | 2              | 6            | 25         |
+| François  | Gaston        | 3              | 6            | 33         |
+| Josianne  | Picketi       | 5              | 11           | 31         |
+| Larry     | Parker        | 4              | 9            | 31         |
+| Laurence  | Giovani       | 3              | 6            | 33         |
+| Luther    | castard       | 5              | 8            | 38         |
+| Marie     | Feiber        | 0              | 9            | 0          |
+| Marie     | Hubert        | 3              | 8            | 27         |
+| Maurice   | André         | 2              | 7            | 22         |
+| Michael   | Sandoro       | 6              | 9            | 40         |
+| Mohammed  | mergaoui      | 4              | 2            | 67         |
+| Nicole    | Planter       | 3              | 8            | 27         |
+| Pascal    | Germain       | 4              | 7            | 36         |
+| Paul      | Martel        | 0              | 5            | 0          |
+| Simone    | vuilloz       | 5              | 6            | 45         |
+| Thomas    | quartier      | 1              | 10           | 9          |
+| Xavier    | Jertoux       | 3              | 9            | 25         |
+| Zineb     | Atlas         | 0              | 3            | 0          |
